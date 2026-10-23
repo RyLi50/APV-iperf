@@ -12,7 +12,7 @@ enum VendingMachineError: Error {
 
 @main
 struct IperfApp: App {
-    var body: some Scene {
+  var body: some Scene {
         WindowGroup {
             ContentView()
         }
@@ -21,31 +21,35 @@ struct IperfApp: App {
 
 struct ContentView: View {
     @State private var Bandwidth: Float64 = 0.0
+    @State private var isPerformingTask = false
 
     var body: some View {
         VStack {
-            Button{
-                do{
-                    try Bandwidth = run_test()
-                } catch{
-                    print("Problem")
-                }
-            } label: {
-                Text("START")
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 20)
+            Button(
+                action: {
+                    isPerformingTask = true
+                    Task {
+                        do { try await Bandwidth = run_test()} catch{print("bruh")}
+                        isPerformingTask = false
+                    }
+                },
+                label: {
+                    Text("START")
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 20)
 
-                    .foregroundColor(.white)
-                    .background(.pink)
-                    .cornerRadius(8)
-            } 
+                        .foregroundColor(.white)
+                        .background(.pink)
+                        .cornerRadius(8)
+                }
+            ).disabled(isPerformingTask)
             Text("Bandwidth: \(Bandwidth)Mbps")
         }
         .padding()
     }
 }
 
-func run_test() throws -> Float64 {
+func run_test() async throws -> Float64 {
     let test = iperf_new_test()
     iperf_defaults(test)
     iperf_set_test_json_output(test, 1)
@@ -93,7 +97,8 @@ func run_test() throws -> Float64 {
     //         print("Problem")
     // }
     
-    let bandwidth = Float64(spliced_output[506]) ?? 0.0 / 1000000
+    var bandwidth = Float64(spliced_output[506]) ?? 0.0
+    bandwidth = bandwidth / 1000000
     print("BANDWIDTH: ", bandwidth, "Mbps")
     return bandwidth
 }
