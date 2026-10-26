@@ -1,0 +1,15 @@
+{
+  "originHash" : "03a9867533b11b9fc581429e38bbcad28d31d430fd5e59c1d55f3b100fb2654e",
+  "pins" : [
+    {
+      "identity" : "iperflib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RyLi50/iperfLib",
+      "state" : {
+        "revision" : "e7c547c868b9c465c5aac5c2af2a0d3e7479ceaa",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
