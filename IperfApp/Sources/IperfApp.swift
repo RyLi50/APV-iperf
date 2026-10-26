@@ -15,7 +15,9 @@ struct IperfApp: App {
   var body: some Scene {
         WindowGroup {
             ContentView()
+            .frame(width: 1000, height: 500)
         }
+        .windowResizability(.contentSize)
     }
 }
 
@@ -35,15 +37,15 @@ struct ContentView: View {
                 },
                 label: {
                     Text("START")
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 20)
-
-                        .foregroundColor(.white)
+                        .padding(.horizontal, 100)
+                        .padding(.vertical, 70)
+                        .font(.system(size: 46))
                         .background(.pink)
                         .cornerRadius(8)
                 }
             ).disabled(isPerformingTask)
-            Text("Bandwidth: \(Bandwidth)Mbps")
+            Text("Bandwidth: \(Bandwidth, specifier:"%.2f") Mbps")
+                .font(.system(size: 46))
         }
         .padding()
     }

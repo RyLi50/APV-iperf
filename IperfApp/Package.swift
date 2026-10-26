@@ -6,7 +6,8 @@ import PackageDescription
 let package = Package(
     name: "IperfApp",
     platforms: [
-        .macOS(.v13)
+        .macOS(.v13),
+        .visionOS(.v1)
     ],
     dependencies: [
         .package(path: "../iperfLib"),
